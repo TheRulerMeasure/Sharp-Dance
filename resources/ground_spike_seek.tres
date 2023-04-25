@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=5 format=2]
+
+[ext_resource path="res://scenes/scripts/card_res.gd" type="Script" id=1]
+[ext_resource path="res://scenes/crosshairs/SingleCrosshairSeek.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/attacks/AtckNodeSingleSpikeSeek.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/raws/icon_single_spike_seek.png" type="Texture" id=4]
+
+[resource]
+script = ExtResource( 1 )
+attack_pack = ExtResource( 3 )
+crosshair_pack = ExtResource( 2 )
+card_icon = ExtResource( 4 )
+seconds_take = 0.3

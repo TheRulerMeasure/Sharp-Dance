@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scenes/scripts/WavesDealer.gd" type="Script" id=3]
+
+[node name="WavesDealer" type="Node"]
+script = ExtResource( 3 )
+
+[node name="Waves" type="Node" parent="."]
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="FinalSecondsTimer" type="Timer" parent="."]
+wait_time = 2.5
+one_shot = true

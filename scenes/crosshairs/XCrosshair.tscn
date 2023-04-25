@@ -1,0 +1,189 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://assets/spritesheets/spikes.png" type="Texture" id=1]
+[ext_resource path="res://assets/raws/crosshair_box_1.png" type="Texture" id=2]
+[ext_resource path="res://scenes/logics/NodeOutputs.tscn" type="PackedScene" id=3]
+
+[sub_resource type="Animation" id=2]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Node2D/Spike:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 2 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Node2D/Spike2:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 2 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Node2D/Spike3:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 2 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Node2D/Spike4:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 2 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Node2D/Spike5:frame")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 2 ]
+}
+
+[sub_resource type="Animation" id=1]
+resource_name = "show"
+length = 3.2
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Node2D/Spike:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 0.9, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 2, 0, 1, 2 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Node2D/Spike2:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1.3, 1.8, 1.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 2, 0, 1, 2 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Node2D/Spike3:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 1.3, 1.8, 1.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 2, 0, 1, 2 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Node2D/Spike4:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 1.3, 1.8, 1.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 2, 0, 1, 2 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Node2D/Spike5:frame")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 1.3, 1.8, 1.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 2, 0, 1, 2 ]
+}
+
+[node name="XCrosshair" type="Node2D"]
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="Spike" type="Sprite" parent="Node2D"]
+texture = ExtResource( 1 )
+offset = Vector2( 0, -3 )
+hframes = 3
+frame = 2
+
+[node name="Spike2" type="Sprite" parent="Node2D"]
+position = Vector2( -48, 48 )
+texture = ExtResource( 1 )
+offset = Vector2( 0, -3 )
+hframes = 3
+frame = 2
+
+[node name="Spike3" type="Sprite" parent="Node2D"]
+position = Vector2( -48, -48 )
+texture = ExtResource( 1 )
+offset = Vector2( 0, -3 )
+hframes = 3
+frame = 2
+
+[node name="Spike4" type="Sprite" parent="Node2D"]
+position = Vector2( 48, -48 )
+texture = ExtResource( 1 )
+offset = Vector2( 0, -3 )
+hframes = 3
+frame = 2
+
+[node name="Spike5" type="Sprite" parent="Node2D"]
+position = Vector2( 48, 48 )
+texture = ExtResource( 1 )
+offset = Vector2( 0, -3 )
+hframes = 3
+frame = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 2 )
+anims/show = SubResource( 1 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+autostart = true
+
+[node name="NodeOutputs" parent="Timer" instance=ExtResource( 3 )]
+signal_name = "timeout"
+target_node = NodePath("../../AnimationPlayer")
+method_name = "play"
+params = [ "show" ]

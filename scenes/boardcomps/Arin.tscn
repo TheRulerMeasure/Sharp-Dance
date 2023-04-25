@@ -1,0 +1,88 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://assets/raws/arin.png" type="Texture" id=1]
+[ext_resource path="res://scenes/boardcomps/DanceDeclarer.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/prefabs/BloodParticle.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/logics/NodeOutputs.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/boardcomps/AISmartMoverInput.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/boardcomps/Gridmover.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/logics/LogicRelay.tscn" type="PackedScene" id=7]
+[ext_resource path="res://scenes/boardcomps/BodyHealth.tscn" type="PackedScene" id=8]
+[ext_resource path="res://scenes/userinterfaces/InfoHealthBar.tscn" type="PackedScene" id=9]
+[ext_resource path="res://assets/sounds/hurt.wav" type="AudioStream" id=10]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 20, 20 )
+
+[node name="Arin" type="Area2D"]
+collision_layer = 0
+collision_mask = 8
+monitorable = false
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+offset = Vector2( 0, -20 )
+flip_h = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="BloodParticle" parent="." instance=ExtResource( 3 )]
+
+[node name="Gridmover" parent="." instance=ExtResource( 6 )]
+
+[node name="NodeOutputs" parent="Gridmover" instance=ExtResource( 4 )]
+signal_name = "move_disallow_setted"
+target_node = NodePath("../../CollisionShape2D")
+method_name = "set_deferred"
+params = [ "disabled", true ]
+
+[node name="NodeOutputs2" parent="Gridmover" instance=ExtResource( 4 )]
+signal_name = "move_allow_setted"
+target_node = NodePath("../../CollisionShape2D")
+method_name = "set_deferred"
+params = [ "disabled", false ]
+
+[node name="BodyHealth" parent="." instance=ExtResource( 8 )]
+health = 9
+
+[node name="NodeOutputs" parent="BodyHealth" instance=ExtResource( 4 )]
+signal_name = "health_changed"
+target_node = NodePath("../../InfoHealthBar")
+method_name = "update_cur_bar_health"
+
+[node name="NodeOutputs2" parent="BodyHealth" instance=ExtResource( 4 )]
+signal_name = "died"
+target_node = NodePath("../../DanceDeclarer")
+method_name = "declare_good"
+
+[node name="NodeOutputs3" parent="BodyHealth" instance=ExtResource( 4 )]
+signal_name = "health_changed"
+target_node = NodePath("../LogicRelay")
+method_name = "trigger"
+
+[node name="LogicRelay" parent="BodyHealth" instance=ExtResource( 7 )]
+
+[node name="NodeOutputs" parent="BodyHealth/LogicRelay" instance=ExtResource( 4 )]
+signal_name = "on_trigger"
+target_node = NodePath("../../../BloodParticle")
+method_name = "set_emitting"
+params = [ true ]
+
+[node name="NodeOutputs2" parent="BodyHealth/LogicRelay" instance=ExtResource( 4 )]
+signal_name = "on_trigger"
+target_node = NodePath("../../../HurtSound")
+method_name = "play"
+
+[node name="AISmartMoverInput" parent="." instance=ExtResource( 5 )]
+gridmover_np = NodePath("../Gridmover")
+max_wait_time = 0.3
+
+[node name="InfoHealthBar" parent="." instance=ExtResource( 9 )]
+current_bar = 1
+start_value = 9
+
+[node name="DanceDeclarer" parent="." instance=ExtResource( 2 )]
+
+[node name="HurtSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 10 )

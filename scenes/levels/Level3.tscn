@@ -1,0 +1,114 @@
+[gd_scene load_steps=21 format=2]
+
+[ext_resource path="res://resources/ground_spike_plus.tres" type="Resource" id=1]
+[ext_resource path="res://resources/ground_spike.tres" type="Resource" id=2]
+[ext_resource path="res://resources/ground_spike_x.tres" type="Resource" id=3]
+[ext_resource path="res://resources/ground_spike_seek.tres" type="Resource" id=4]
+[ext_resource path="res://scenes/logics/NodeOutputs.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/decks/TrayMain.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/prefabs/BadDanceShow.tscn" type="PackedScene" id=7]
+[ext_resource path="res://scenes/decks/DynamicDeck2D.tscn" type="PackedScene" id=8]
+[ext_resource path="res://scenes/logics/WavesDealer.tscn" type="PackedScene" id=9]
+[ext_resource path="res://scenes/userinterfaces/TurnUI.tscn" type="PackedScene" id=10]
+[ext_resource path="res://scenes/userinterfaces/UIHealthBar.tscn" type="PackedScene" id=11]
+[ext_resource path="res://scenes/decks/AIAttackAppender.tscn" type="PackedScene" id=12]
+[ext_resource path="res://scenes/prefabs/GoodDanceShow.tscn" type="PackedScene" id=13]
+[ext_resource path="res://scenes/decks/TraySap.tscn" type="PackedScene" id=14]
+[ext_resource path="res://scenes/decks/FuncDDeckManager.tscn" type="PackedScene" id=15]
+[ext_resource path="res://scenes/logics/PhaseControl.tscn" type="PackedScene" id=16]
+[ext_resource path="res://scenes/decks/NodeDanceJudge.tscn" type="PackedScene" id=17]
+[ext_resource path="res://assets/musics/glitch.ogg" type="AudioStream" id=18]
+[ext_resource path="res://scenes/logics/LogicRelay.tscn" type="PackedScene" id=19]
+[ext_resource path="res://scenes/logics/LevelChanger.tscn" type="PackedScene" id=20]
+
+[node name="Level3" type="Node"]
+
+[node name="NodeDanceJudge" parent="." instance=ExtResource( 17 )]
+
+[node name="NodeOutputs" parent="NodeDanceJudge" instance=ExtResource( 5 )]
+signal_name = "good_declare_recieved"
+target_node = NodePath("../../Node2D/GoodDanceShow")
+method_name = "show_label"
+
+[node name="NodeOutputs3" parent="NodeDanceJudge" instance=ExtResource( 5 )]
+signal_name = "good_declare_recieved"
+target_node = NodePath("../LogicRelay")
+method_name = "trigger"
+
+[node name="NodeOutputs2" parent="NodeDanceJudge" instance=ExtResource( 5 )]
+signal_name = "bad_declare_recieved"
+target_node = NodePath("../../Node2D/BadDanceShow")
+method_name = "show_label"
+
+[node name="NodeOutputs4" parent="NodeDanceJudge" instance=ExtResource( 5 )]
+signal_name = "bad_declare_recieved"
+target_node = NodePath("../LogicRelay")
+method_name = "trigger"
+
+[node name="LogicRelay" parent="NodeDanceJudge" instance=ExtResource( 19 )]
+
+[node name="Timer" type="Timer" parent="NodeDanceJudge/LogicRelay"]
+wait_time = 3.5
+one_shot = true
+
+[node name="NodeOutputs" parent="NodeDanceJudge/LogicRelay/Timer" instance=ExtResource( 5 )]
+signal_name = "timeout"
+target_node = NodePath("../../../../LevelChanger")
+method_name = "change_level"
+
+[node name="NodeOutputs" parent="NodeDanceJudge/LogicRelay" instance=ExtResource( 5 )]
+signal_name = "on_trigger"
+target_node = NodePath("../Timer")
+method_name = "start"
+
+[node name="LevelChanger" parent="." instance=ExtResource( 20 )]
+level_file_path = "res://scenes/levels/LevelMenu.tscn"
+
+[node name="PhaseControl" parent="." instance=ExtResource( 16 )]
+
+[node name="WavesDealer" parent="." instance=ExtResource( 9 )]
+
+[node name="AIAttackAppender" parent="." instance=ExtResource( 12 )]
+attack_resources = [ ExtResource( 4 ), ExtResource( 3 ) ]
+min_count = 15
+max_count = 17
+
+[node name="FuncDDeckManager" parent="." instance=ExtResource( 15 )]
+attack_resources = [ ExtResource( 2 ), ExtResource( 1 ), ExtResource( 4 ), ExtResource( 3 ) ]
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="TrayMain" parent="Node2D" instance=ExtResource( 6 )]
+position = Vector2( 224, 83 )
+
+[node name="TraySap" parent="Node2D" instance=ExtResource( 14 )]
+position = Vector2( 823, 80 )
+
+[node name="DynamicDeck2D" parent="Node2D" instance=ExtResource( 8 )]
+visible = false
+bad_tray_np = NodePath("../TraySap")
+
+[node name="BadDanceShow" parent="Node2D" instance=ExtResource( 7 )]
+position = Vector2( 652, 363 )
+
+[node name="GoodDanceShow" parent="Node2D" instance=ExtResource( 13 )]
+position = Vector2( 649, 363 )
+
+[node name="TurnUI" parent="." instance=ExtResource( 10 )]
+visible = false
+
+[node name="UIHealthBar" parent="." instance=ExtResource( 11 )]
+
+[node name="AutoStartPhase" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+autostart = true
+
+[node name="NodeOutputs" parent="AutoStartPhase" instance=ExtResource( 5 )]
+signal_name = "timeout"
+target_node = NodePath("../../PhaseControl")
+method_name = "protest_current"
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 18 )
+autoplay = true

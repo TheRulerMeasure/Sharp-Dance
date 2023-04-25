@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/raws/blod.png" type="Texture" id=1]
+
+[sub_resource type="ParticlesMaterial" id=1]
+flag_disable_z = true
+direction = Vector3( 0, -1, 0 )
+initial_velocity = 224.72
+initial_velocity_random = 0.72
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+angle = 360.0
+angle_random = 1.0
+scale = 0.5
+scale_random = 0.51
+color = Color( 0.290196, 0.0745098, 0.0745098, 1 )
+
+[node name="BloodParticle" type="Particles2D"]
+emitting = false
+amount = 6
+lifetime = 0.23
+one_shot = true
+explosiveness = 0.7
+process_material = SubResource( 1 )
+texture = ExtResource( 1 )
